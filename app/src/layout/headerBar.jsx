@@ -19,3 +19,7 @@ const HeaderBar = () => {
 export default HeaderBar;
 
 // darker blue: 394B55
+
+// light grey: #F4F4F4
+// lighter blue: B4C1CC
+// // medium blue: 546C78

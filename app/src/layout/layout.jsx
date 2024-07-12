@@ -1,5 +1,6 @@
 import { Container } from '@mui/material';
 import StatusBox  from './statusBox';
+import Inventory from '../inventory';
 import HeaderBar from './headerBar';
 
 const Layout = () => {
@@ -8,23 +9,26 @@ const Layout = () => {
             <HeaderBar />
             <Container 
               maxWidth="xl" 
+              disableGutters
               sx={{
                   height: 'calc(100vh - 50px)', 
                   width: '100vw', 
-                  backgroundColor: '#F4F4F4',
+                  backgroundColor: '#F6F8FC',
                   display: 'flex',
                   alignItems: 'center',
-                  padding: 5,
-              }} 
+                  margin: 0,
+                  boxSizing: 'border-box',
+                }} 
           >
               <div style={{display: "flex", 
                           justifyContent: "space-between",
-                          padding: "60px", 
+                          padding: "30px 80px 30px 80px", 
                           width: "100%", 
                           height: "100%", 
+                          boxSizing: "border-box",
                           }}
               >
-                  <StatusBox />
+                  <Inventory />
                   <StatusBox />
                   <StatusBox />
               </div>
