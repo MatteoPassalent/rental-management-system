@@ -8,8 +8,8 @@ const Layout = () => {
         <div>
             <HeaderBar />
             <Container 
-              maxWidth="xl" 
               disableGutters
+              maxWidth={false}
               sx={{
                   height: 'calc(100vh - 50px)', 
                   width: '100vw', 
