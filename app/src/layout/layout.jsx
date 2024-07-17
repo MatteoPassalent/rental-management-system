@@ -1,7 +1,8 @@
 import { Container } from "@mui/material";
-import StatusBox from "./statusBox";
-import Inventory from "../inventory";
+import Inventory from "../status_categories/inventory";
 import HeaderBar from "./headerBar";
+import Maintenance from "../status_categories/maintenance";
+import Rented from "../status_categories/rented";
 
 const Layout = () => {
   return (
@@ -31,8 +32,8 @@ const Layout = () => {
           }}
         >
           <Inventory />
-          <StatusBox />
-          <StatusBox />
+          <Maintenance />
+          <Rented />
         </div>
       </Container>
     </div>

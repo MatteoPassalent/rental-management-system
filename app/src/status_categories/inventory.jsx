@@ -1,10 +1,10 @@
-import StatusBox from "./layout/statusBox";
-import CarList from "./carList";
+import StatusBox from "../layout/statusBox";
+import CarList from "../cars/carList";
 
 const Inventory = () => {
   return (
     <StatusBox name="Inventory">
-      <CarList />
+      <CarList status="inventory" />
     </StatusBox>
   );
 };

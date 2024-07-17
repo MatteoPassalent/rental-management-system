@@ -12,7 +12,10 @@ import {
 import { createFilterOptions } from "@mui/material/Autocomplete";
 
 const RentDialog = (props) => {
-  const [open, toggleOpen] = useState(false);
+  const { open, toggleOpen } = props;
+  const [renter, setRenter] = useState(null);
+  const [days, setDays] = useState(null);
+  const [renterOptions, setRenterOptions] = useState([{ name: "John Doe" }]);
 
   const filter = createFilterOptions();
 
@@ -26,22 +29,18 @@ const RentDialog = (props) => {
   return (
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
-        <DialogTitle>Add a new Renter</DialogTitle>
+        <DialogTitle>Rent Out</DialogTitle>
         <DialogContent>
           <Autocomplete
+            sx={{ marginTop: "5px" }}
             value={renter}
             onChange={(event, newValue) => {
               if (newValue && newValue.inputValue) {
-                setTimeout(() => {
-                  toggleOpen(true);
-                  setDialogValue({
-                    name: newValue.inputValue,
-                    email: "",
-                    phone: "",
-                    address: "",
-                    car: "",
-                  });
-                });
+                setRenter(newValue);
+                setRenterOptions((prev) => [
+                  ...prev,
+                  { name: newValue.inputValue },
+                ]);
               } else {
                 setRenter(newValue);
               }
@@ -81,23 +80,17 @@ const RentDialog = (props) => {
                 </li>
               );
             }}
-            sx={{ width: "140px" }}
             freeSolo
-            size="small"
             renderInput={(params) => <TextField {...params} label="Rent to" />}
           />
           <TextField
             autoFocus
             margin="dense"
-            value={dialogValue.name}
-            onChange={(event) =>
-              setDialogValue({
-                ...dialogValue,
-                name: event.target.value,
-              })
-            }
-            label="Name"
-            variant="standard"
+            value={days}
+            onChange={(event) => setDays(event.target.value)}
+            type="number"
+            label="Number of Days"
+            variant="outlined"
           />
         </DialogContent>
         <DialogActions>
