@@ -4,7 +4,7 @@ import CarList from "../cars/carList";
 const Maintenance = () => {
   return (
     <StatusBox name="Maintenance">
-      <CarList status="maintenance" />
+      {/* <CarList status="maintenance" /> */}
     </StatusBox>
   );
 };

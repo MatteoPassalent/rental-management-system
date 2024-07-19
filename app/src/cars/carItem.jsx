@@ -4,6 +4,7 @@ import { useState } from "react";
 import MaintenanceDialog from "../dialogs/maintenanceDialog";
 
 const CarItem = (props) => {
+  console.log(props.car);
   const [open, toggleOpen] = useState(false);
   const [open2, toggleOpen2] = useState(false);
   return (
@@ -28,11 +29,11 @@ const CarItem = (props) => {
         <Typography>Plate Number: </Typography>
       </div>
       <div style={{ marginRight: "20px" }}>
-        <Typography>Toyota</Typography>
-        <Typography>Corolla</Typography>
-        <Typography>2021</Typography>
-        <Typography>Black</Typography>
-        <Typography>ABC123</Typography>
+        <Typography>{props.car.make}</Typography>
+        <Typography>{props.car.model}</Typography>
+        <Typography>{props.car.year}</Typography>
+        <Typography>{props.car.color}</Typography>
+        <Typography>{props.car.licensePlate}</Typography>
       </div>
       {props.status === "inventory" && (
         <div style={{ width: "100%" }}>

@@ -13,8 +13,8 @@ import { createFilterOptions } from "@mui/material/Autocomplete";
 
 const RentDialog = (props) => {
   const { open, toggleOpen } = props;
-  const [renter, setRenter] = useState(null);
-  const [days, setDays] = useState(null);
+  const [renter, setRenter] = useState({ name: "" });
+  const [days, setDays] = useState(0);
   const [renterOptions, setRenterOptions] = useState([{ name: "John Doe" }]);
 
   const filter = createFilterOptions();

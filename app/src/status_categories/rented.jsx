@@ -1,12 +1,10 @@
 import StatusBox from "../layout/statusBox";
 import CarList from "../cars/carList";
 
-const Maintenance = () => {
+const Rented = () => {
   return (
-    <StatusBox name="Rented">
-      <CarList status="rented" />
-    </StatusBox>
+    <StatusBox name="Rented">{/* <CarList status="rented" /> */}</StatusBox>
   );
 };
 
-export default Maintenance;
+export default Rented;
