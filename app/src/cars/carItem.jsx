@@ -4,9 +4,22 @@ import { useState } from "react";
 import MaintenanceDialog from "../dialogs/maintenanceDialog";
 
 const CarItem = (props) => {
-  console.log(props.car);
-  const [open, toggleOpen] = useState(false);
-  const [open2, toggleOpen2] = useState(false);
+  const [openRentDialog, toggleRentDialog] = useState(false);
+  const [openMaintenanceDialog, toggleMaintenanceDialog] = useState(false);
+
+  const updateStatus = async (status) => {
+    await fetch("/update-status", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: props.car.id,
+        status: status,
+      }),
+    });
+    props.setFlag((prev) => !prev);
+  };
   return (
     <Card
       sx={{
@@ -46,7 +59,7 @@ const CarItem = (props) => {
               width: "100%",
               backgroundColor: "#B4C1CC",
             }}
-            onClick={() => toggleOpen(true)}
+            onClick={() => toggleRentDialog(true)}
           >
             Rent Out
           </Button>
@@ -58,12 +71,16 @@ const CarItem = (props) => {
               width: "100%",
               backgroundColor: "#B4C1CC",
             }}
-            onClick={() => toggleOpen2(true)}
+            onClick={() => toggleMaintenanceDialog(true)}
           >
             Maintence
           </Button>
-          <RentDialog open={open} toggleOpen={toggleOpen} />
-          <MaintenanceDialog open2={open2} toggleOpen2={toggleOpen2} />
+          <RentDialog open={openRentDialog} toggleOpen={toggleRentDialog} />
+          <MaintenanceDialog
+            open={openMaintenanceDialog}
+            toggleOpen={toggleMaintenanceDialog}
+            updateStatus={updateStatus}
+          />
         </div>
       )}
       {props.status === "maintenance" && (
@@ -77,7 +94,7 @@ const CarItem = (props) => {
               width: "100%",
               backgroundColor: "#B4C1CC",
             }}
-            onClick={() => toggleOpen(true)}
+            onClick={() => toggleRentDialog(true)}
           >
             Rent Out
           </Button>
@@ -89,12 +106,15 @@ const CarItem = (props) => {
               width: "100%",
               backgroundColor: "#B4C1CC",
             }}
-            onClick={() => console.log("return to inventory")}
+            onClick={() => updateStatus("inventory")}
           >
             Return to Inventory
           </Button>
-          <RentDialog open={open} toggleOpen={toggleOpen} />
-          <MaintenanceDialog open2={open2} toggleOpen2={toggleOpen2} />
+          <RentDialog open={openRentDialog} toggleOpen={toggleRentDialog} />
+          <MaintenanceDialog
+            open={openMaintenanceDialog}
+            toggleOpen={toggleMaintenanceDialog}
+          />
         </div>
       )}
       {props.status === "rented" && (
@@ -108,7 +128,7 @@ const CarItem = (props) => {
               width: "100%",
               backgroundColor: "#B4C1CC",
             }}
-            onClick={() => toggleOpen2(true)}
+            onClick={() => toggleMaintenanceDialog(true)}
           >
             Maintence
           </Button>
@@ -120,12 +140,15 @@ const CarItem = (props) => {
               width: "100%",
               backgroundColor: "#B4C1CC",
             }}
-            onClick={() => console.log("return to inventory")}
+            onClick={() => updateStatus("inventory")}
           >
             Return to Inventory
           </Button>
-          <RentDialog open={open} toggleOpen={toggleOpen} />
-          <MaintenanceDialog open2={open2} toggleOpen2={toggleOpen2} />
+          <RentDialog open={openRentDialog} toggleOpen={toggleRentDialog} />
+          <MaintenanceDialog
+            open={openMaintenanceDialog}
+            toggleOpen={toggleMaintenanceDialog}
+          />
         </div>
       )}
     </Card>

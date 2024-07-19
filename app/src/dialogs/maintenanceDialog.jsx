@@ -1,4 +1,3 @@
-// button opens dialog to rent, autocomplete for renter, just keeps track of name.
 import { useState } from "react";
 import {
   Dialog,
@@ -10,18 +9,19 @@ import {
 } from "@mui/material";
 
 const MaintenanceDialog = (props) => {
-  const { open2, toggleOpen2 } = props;
+  const { open, toggleOpen } = props;
   const [days, setDays] = useState(0);
 
   const handleClose = () => {
-    toggleOpen2(false);
+    toggleOpen(false);
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    props.updateStatus("maintenance");
     handleClose();
   };
   return (
-    <Dialog open={open2} onClose={handleClose}>
+    <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
         <DialogTitle>Out For Maintenance</DialogTitle>
         <DialogContent>

@@ -1,9 +1,15 @@
 import StatusBox from "../layout/statusBox";
 import CarList from "../cars/carList";
 
-const Rented = () => {
+const Rented = (props) => {
   return (
-    <StatusBox name="Rented">{/* <CarList status="rented" /> */}</StatusBox>
+    <StatusBox name="Rented">
+      <CarList
+        status="rented"
+        cars={props.rentedList}
+        setFlag={props.setFlag}
+      />
+    </StatusBox>
   );
 };
 
