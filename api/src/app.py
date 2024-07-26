@@ -1,5 +1,5 @@
 from flask import jsonify, request
-from src.models import Car
+from src.models import Car, Customer
 from . import db
 
 def create_list(results):
@@ -69,6 +69,38 @@ def register_routes(app, logger):
         car.status = status
         db.session.commit()
         return jsonify({"message": "status updated"}), 200
+    
+    @app.route("/add-new-customer", methods=["POST"])
+    def add_new_customer():
+        name = request.json.get("name")
+        customer = Customer(name=name)
+        db.session.add(customer)
+        db.session.commit()
+        return jsonify({"name": customer.name, "id": customer.id}), 201
+    
+    @app.route("/get-renters")
+    def get_renters():
+        renters = Customer.query.all()
+        renter_list = []
+        for renter in renters:
+            renter_data = {
+                "id": renter.id,
+                "name": renter.name,
+            }
+            renter_list.append(renter_data)
+        return jsonify(renter_list), 200
+    
+    @app.route("/rent-car", methods=["PUT"])
+    def rent_car():
+        car_id = request.json.get("carId")
+        customer = request.json.get("customerId")
+        car = Car.query.get(car_id)
+        customer = Customer.query.get(customer)
+        car.status = "rented"
+        car.rentedTo = customer.id
+        customer.cars.append(car)
+        db.session.commit()
+        return jsonify({"message": "car rented"}), 200
     
     @app.route("/drop-db")
     def drop_db():

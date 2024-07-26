@@ -16,4 +16,4 @@ class Car(db.Model):
 class Customer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
-    car = db.relationship("Car")
+    cars = db.relationship("Car")

@@ -75,12 +75,6 @@ const CarItem = (props) => {
           >
             Maintence
           </Button>
-          <RentDialog open={openRentDialog} toggleOpen={toggleRentDialog} />
-          <MaintenanceDialog
-            open={openMaintenanceDialog}
-            toggleOpen={toggleMaintenanceDialog}
-            updateStatus={updateStatus}
-          />
         </div>
       )}
       {props.status === "maintenance" && (
@@ -110,11 +104,6 @@ const CarItem = (props) => {
           >
             Return to Inventory
           </Button>
-          <RentDialog open={openRentDialog} toggleOpen={toggleRentDialog} />
-          <MaintenanceDialog
-            open={openMaintenanceDialog}
-            toggleOpen={toggleMaintenanceDialog}
-          />
         </div>
       )}
       {props.status === "rented" && (
@@ -144,12 +133,22 @@ const CarItem = (props) => {
           >
             Return to Inventory
           </Button>
-          <RentDialog open={openRentDialog} toggleOpen={toggleRentDialog} />
-          <MaintenanceDialog
-            open={openMaintenanceDialog}
-            toggleOpen={toggleMaintenanceDialog}
-          />
         </div>
+      )}
+      {openRentDialog && (
+        <RentDialog
+          open={openRentDialog}
+          car={props.car}
+          toggleOpen={toggleRentDialog}
+          updateStatus={updateStatus}
+        />
+      )}
+      {openMaintenanceDialog && (
+        <MaintenanceDialog
+          open={openMaintenanceDialog}
+          toggleOpen={toggleMaintenanceDialog}
+          updateStatus={updateStatus}
+        />
       )}
     </Card>
   );

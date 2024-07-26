@@ -1,5 +1,5 @@
 // button opens dialog to rent, autocomplete for renter, just keeps track of name.
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -12,35 +12,68 @@ import {
 import { createFilterOptions } from "@mui/material/Autocomplete";
 
 const RentDialog = (props) => {
-  const { open, toggleOpen } = props;
-  const [renter, setRenter] = useState({ name: "" });
+  const [renter, setRenter] = useState({ name: "", id: "" });
   const [days, setDays] = useState(0);
-  const [renterOptions, setRenterOptions] = useState([{ name: "John Doe" }]);
+  const [renterOptions, setRenterOptions] = useState([{ name: "", id: "" }]);
 
   const filter = createFilterOptions();
 
-  const handleClose = () => {
-    toggleOpen(false);
+  const fetchRenters = async () => {
+    const response = await fetch("/get-renters");
+    const data = await response.json();
+    setRenterOptions(data);
   };
-  const handleSubmit = (event) => {
+
+  useEffect(() => {
+    fetchRenters();
+  }, []);
+
+  const addNewRenter = async (renterName) => {
+    const response = await fetch("/add-new-customer", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: renterName,
+      }),
+    });
+    const data = await response.json();
+    return data;
+  };
+
+  const handleClose = () => {
+    props.toggleOpen(false);
+  };
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    await fetch("/rent-car", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        carId: props.car.id,
+        customerId: renter.id,
+        days: days,
+      }),
+    });
+    props.updateStatus("rented");
     handleClose();
   };
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog open={props.open} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
         <DialogTitle>Rent Out</DialogTitle>
         <DialogContent>
           <Autocomplete
             sx={{ marginTop: "5px" }}
             value={renter}
-            onChange={(event, newValue) => {
-              if (newValue && newValue.inputValue) {
-                setRenter(newValue);
-                setRenterOptions((prev) => [
-                  ...prev,
-                  { name: newValue.inputValue },
-                ]);
+            onChange={async (event, newValue) => {
+              if (newValue?.inputValue) {
+                const newRenter = await addNewRenter(newValue.inputValue);
+                await fetchRenters();
+                setRenter(newRenter);
               } else {
                 setRenter(newValue);
               }

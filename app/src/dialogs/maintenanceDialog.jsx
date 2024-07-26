@@ -9,11 +9,10 @@ import {
 } from "@mui/material";
 
 const MaintenanceDialog = (props) => {
-  const { open, toggleOpen } = props;
   const [days, setDays] = useState(0);
 
   const handleClose = () => {
-    toggleOpen(false);
+    props.toggleOpen(false);
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -21,7 +20,7 @@ const MaintenanceDialog = (props) => {
     handleClose();
   };
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog open={props.open} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
         <DialogTitle>Out For Maintenance</DialogTitle>
         <DialogContent>
