@@ -61,14 +61,18 @@ const CarItem = (props) => {
         <Typography>Colour: </Typography>
         <Typography>Plate Number: </Typography>
       </div>
-      <div style={{ marginRight: "20px", marginTop: "15px" }}>
+      <div
+        style={{ marginRight: "20px", marginTop: "15px", minWidth: "100px" }}
+      >
         <Typography>{props.car.make}</Typography>
         <Typography>{props.car.model}</Typography>
         <Typography>{props.car.year}</Typography>
         <Typography>{props.car.color}</Typography>
         <Typography>{props.car.licensePlate}</Typography>
       </div>
-      <div style={{ flexDirection: "column" }}>
+      <div
+        style={{ flexDirection: "column", width: "100%", marginRight: "15px" }}
+      >
         <div
           style={{ display: "flex", width: "100%", justifyContent: "right" }}
         >
