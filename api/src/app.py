@@ -41,6 +41,14 @@ def register_routes(app):
         db.session.add(car)
         db.session.commit()
         return jsonify({"message": "car added"})
+    
+    @app.route("/delete-car", methods=["DELETE"])
+    def delete_car():
+        car_id = request.json.get("id")
+        car = Car.query.get(car_id)
+        db.session.delete(car)
+        db.session.commit()
+        return jsonify({"message": "car deleted"}), 200
 
     @app.route("/get-cars")
     def get_cars():

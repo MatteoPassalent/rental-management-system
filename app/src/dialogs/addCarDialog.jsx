@@ -9,7 +9,7 @@ import {
   Grid,
 } from "@mui/material";
 
-const MaintenanceDialog = (props) => {
+const AddCarDialog = (props) => {
   const [car, setCar] = useState({
     make: "",
     model: "",
@@ -111,4 +111,4 @@ const MaintenanceDialog = (props) => {
   );
 };
 
-export default MaintenanceDialog;
+export default AddCarDialog;
