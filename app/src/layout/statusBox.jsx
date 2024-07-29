@@ -29,6 +29,7 @@ const StatusBox = (props) => {
         sx={{
           height: "100%",
           display: "flex",
+          flexDirection: "column",
           justifyContent: "center",
           backgroundColor: "lightgrey",
           borderBottomLeftRadius: "10px",

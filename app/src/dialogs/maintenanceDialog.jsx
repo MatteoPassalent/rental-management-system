@@ -36,7 +36,7 @@ const MaintenanceDialog = (props) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Add</Button>
+          <Button type="submit">Submit</Button>
         </DialogActions>
       </form>
     </Dialog>

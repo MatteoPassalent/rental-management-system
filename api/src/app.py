@@ -19,26 +19,22 @@ def create_list(results):
         car_list.append(car_data)
     return car_list
 
-def register_routes(app, logger):
-    @app.route("/")
-    def hello_world():
-        logger.info("Hello, World!")
-        return "<p>Hello, World test change!</p>", 200
-
-    @app.route("/test")
-    def test():
-        logger.info("Test")
-        return "<p>Test</p>", 200
-
+def register_routes(app):
     @app.route("/add-car", methods=["POST"])
     def add_car():
+        make = request.json.get("make")
+        model = request.json.get("model")
+        year = request.json.get("year")
+        color = request.json.get("color")
+        license_plate = request.json.get("licensePlate")
+
         car = Car(
-            make="Toyota",
-            model="Corolla",
-            year="2021",
-            color="Black",
-            licensePlate="ABC123",
-            status="rented",
+            make=make,
+            model=model,
+            year=year,
+            color=color,
+            licensePlate=license_plate,
+            status="inventory",
             rentedTo=None,
             daysRemaining=None,
         )
@@ -210,4 +206,4 @@ def register_routes(app, logger):
         db.session.add_all(cars)
         db.session.commit()
 
-        return jsonify({"message": "db seeded"}), 200
+        return jsonify({"message": "db seeded"}), 200   

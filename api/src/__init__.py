@@ -15,9 +15,8 @@ def create_app():
     db.init_app(app)
 
     logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger(__name__)
 
     with app.app_context():
         db.create_all()
 
-    return app, logger
+    return app
