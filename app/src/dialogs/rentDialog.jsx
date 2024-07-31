@@ -1,4 +1,4 @@
-// button opens dialog to rent, autocomplete for renter, just keeps track of name.
+// button opens dialog to rent, autocomplete for customer, just keeps track of name.
 import { useState, useEffect } from "react";
 import {
   Dialog,
@@ -12,30 +12,32 @@ import {
 import { createFilterOptions } from "@mui/material/Autocomplete";
 
 const RentDialog = (props) => {
-  const [renter, setRenter] = useState({ name: "", id: "" });
+  const [customer, setCustomer] = useState({ name: "", id: "" });
   const [days, setDays] = useState(0);
-  const [renterOptions, setRenterOptions] = useState([{ name: "", id: "" }]);
+  const [customerOptions, setCustomerOptions] = useState([
+    { name: "", id: "" },
+  ]);
 
   const filter = createFilterOptions();
 
-  const fetchRenters = async () => {
-    const response = await fetch("/get-renters");
+  const fetchCustomers = async () => {
+    const response = await fetch("/get-customers");
     const data = await response.json();
-    setRenterOptions(data);
+    setCustomerOptions(data);
   };
 
   useEffect(() => {
-    fetchRenters();
+    fetchCustomers();
   }, []);
 
-  const addNewRenter = async (renterName) => {
+  const addNewCustomer = async (customerName) => {
     const response = await fetch("/add-new-customer", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: renterName,
+        name: customerName,
       }),
     });
     const data = await response.json();
@@ -54,7 +56,7 @@ const RentDialog = (props) => {
       },
       body: JSON.stringify({
         carId: props.car.id,
-        customerId: renter.id,
+        customerId: customer.id,
         days: days,
       }),
     });
@@ -68,14 +70,14 @@ const RentDialog = (props) => {
         <DialogContent>
           <Autocomplete
             sx={{ marginTop: "5px" }}
-            value={renter}
+            value={customer}
             onChange={async (event, newValue) => {
               if (newValue?.inputValue) {
-                const newRenter = await addNewRenter(newValue.inputValue);
-                await fetchRenters();
-                setRenter(newRenter);
+                const newCustomer = await addNewCustomer(newValue.inputValue);
+                await fetchCustomers();
+                setCustomer(newCustomer);
               } else {
-                setRenter(newValue);
+                setCustomer(newValue);
               }
             }}
             filterOptions={(options, params) => {
@@ -98,7 +100,7 @@ const RentDialog = (props) => {
             selectOnFocus
             clearOnBlur
             handleHomeEndKeys
-            options={renterOptions}
+            options={customerOptions}
             getOptionLabel={(option) => {
               if (option.inputValue) {
                 return option.inputValue;
