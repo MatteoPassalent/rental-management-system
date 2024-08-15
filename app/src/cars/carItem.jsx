@@ -6,13 +6,15 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import ConfirmDialog from "../dialogs/confirmDialog";
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const CarItem = (props) => {
   const [openRentDialog, toggleRentDialog] = useState(false);
   const [openMaintenanceDialog, toggleMaintenanceDialog] = useState(false);
   const [openConfirmDialog, toggleConfirmDialog] = useState(false);
 
   const updateStatus = async (status) => {
-    await fetch("/update-status", {
+    await fetch(`${apiUrl}/update-status`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -26,7 +28,7 @@ const CarItem = (props) => {
   };
 
   const handleDelete = async () => {
-    await fetch("/delete-car", {
+    await fetch(`${apiUrl}/delete-car`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

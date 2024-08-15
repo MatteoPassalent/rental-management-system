@@ -3,11 +3,13 @@ import AddCarDialog from "../dialogs/addCarDialog";
 import { useState } from "react";
 import { Button } from "@mui/material";
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const CarList = (props) => {
   const [carDialog, toggleCarDialog] = useState(false);
 
   const addCar = async (car) => {
-    await fetch("/add-car", {
+    await fetch(`${apiUrl}/add-car`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

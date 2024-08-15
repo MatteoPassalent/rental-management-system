@@ -11,6 +11,8 @@ import {
 } from "@mui/material";
 import { createFilterOptions } from "@mui/material/Autocomplete";
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const RentDialog = (props) => {
   const [customer, setCustomer] = useState({ name: "", id: "" });
   const [days, setDays] = useState(0);
@@ -21,7 +23,7 @@ const RentDialog = (props) => {
   const filter = createFilterOptions();
 
   const fetchCustomers = async () => {
-    const response = await fetch("/get-customers");
+    const response = await fetch(`${apiUrl}/get-customers`);
     const data = await response.json();
     setCustomerOptions(data);
   };
@@ -31,7 +33,7 @@ const RentDialog = (props) => {
   }, []);
 
   const addNewCustomer = async (customerName) => {
-    const response = await fetch("/add-new-customer", {
+    const response = await fetch(`${apiUrl}/add-new-customer`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -49,7 +51,7 @@ const RentDialog = (props) => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await fetch("/rent-car", {
+    await fetch(`${apiUrl}/rent-car`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

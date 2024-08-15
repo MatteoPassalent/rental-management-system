@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 import os
+from os import path
 
 db = SQLAlchemy()
 load_dotenv()
@@ -24,6 +25,7 @@ def create_app():
     app.register_blueprint(dev)
 
     with app.app_context():
-        db.create_all()
+        if not path.exists("/api/instance/database.db"):
+            db.create_all()
 
     return app
