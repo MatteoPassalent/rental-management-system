@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from src.models import Car, Customer
 from .. import db
 
-status_catergory = Blueprint("status_catergory", __name__)
+status_catergory = Blueprint("status_catergory", __name__, url_prefix="/api")
 
 @status_catergory.route("/update-status", methods=["PUT"])
 def update_status():

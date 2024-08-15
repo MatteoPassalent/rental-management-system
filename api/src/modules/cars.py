@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from src.models import Car
 from .. import db
 
-cars = Blueprint("cars", __name__)
+cars = Blueprint("cars", __name__, url_prefix="/api")
 
 @cars.route("/add-car", methods=["POST"])
 def add_car():

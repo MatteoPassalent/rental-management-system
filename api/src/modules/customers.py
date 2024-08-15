@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from src.models import Customer
 from .. import db
 
-customers = Blueprint("customers", __name__)
+customers = Blueprint("customers", __name__, url_prefix="/api")
 
 @customers.route("/add-new-customer", methods=["POST"])
 def add_new_customer():
