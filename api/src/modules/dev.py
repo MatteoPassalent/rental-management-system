@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify
 from src.models import Car
 from .. import db
 
-dev = Blueprint("dev", __name__)
+dev = Blueprint("dev", __name__, url_prefix="/api")
 
 @dev.route("/drop-db")
 def drop_db():

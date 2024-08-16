@@ -1,4 +1,5 @@
 import { Box, AppBar } from "@mui/material";
+import PropTypes from "prop-types";
 
 const StatusBox = (props) => {
   return (
@@ -43,6 +44,11 @@ const StatusBox = (props) => {
       </Box>
     </div>
   );
+};
+
+StatusBox.propTypes = {
+  name: PropTypes.string,
+  children: PropTypes.element,
 };
 
 export default StatusBox;

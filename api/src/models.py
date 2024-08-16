@@ -1,6 +1,5 @@
 from . import db
 
-
 class Car(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     make = db.Column(db.String(50))

@@ -10,6 +10,7 @@ import {
   Autocomplete,
 } from "@mui/material";
 import { createFilterOptions } from "@mui/material/Autocomplete";
+import PropTypes from "prop-types";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -86,7 +87,6 @@ const RentDialog = (props) => {
               const filtered = filter(options, params);
 
               const { inputValue } = params;
-              // Suggest the creation of a new value
               const isExisting = options.some(
                 (option) => inputValue === option.name
               );
@@ -109,8 +109,8 @@ const RentDialog = (props) => {
               }
               return option.name;
             }}
-            renderOption={(props, option) => {
-              const { key, ...optionProps } = props;
+            renderOption={(items, option) => {
+              const { key, ...optionProps } = items;
               return (
                 <li key={key} {...optionProps}>
                   {option.name}
@@ -137,6 +137,13 @@ const RentDialog = (props) => {
       </form>
     </Dialog>
   );
+};
+
+RentDialog.propTypes = {
+  open: PropTypes.bool,
+  car: PropTypes.object,
+  toggleOpen: PropTypes.func,
+  updateStatus: PropTypes.func,
 };
 
 export default RentDialog;

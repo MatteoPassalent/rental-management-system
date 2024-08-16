@@ -1,4 +1,5 @@
 import { Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
+import PropTypes from "prop-types";
 
 const ConfirmDialog = (props) => {
   const handleClose = () => {
@@ -20,6 +21,12 @@ const ConfirmDialog = (props) => {
       </form>
     </Dialog>
   );
+};
+
+ConfirmDialog.propTypes = {
+  open: PropTypes.bool,
+  toggleOpen: PropTypes.func,
+  handleDelete: PropTypes.func,
 };
 
 export default ConfirmDialog;

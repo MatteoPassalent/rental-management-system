@@ -8,6 +8,7 @@ import {
   Button,
   Grid,
 } from "@mui/material";
+import PropTypes from "prop-types";
 
 const AddCarDialog = (props) => {
   const [car, setCar] = useState({
@@ -109,6 +110,12 @@ const AddCarDialog = (props) => {
       </form>
     </Dialog>
   );
+};
+
+AddCarDialog.propTypes = {
+  open: PropTypes.bool,
+  toggleOpen: PropTypes.func,
+  addCar: PropTypes.func,
 };
 
 export default AddCarDialog;

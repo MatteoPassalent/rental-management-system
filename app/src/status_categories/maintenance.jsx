@@ -1,5 +1,6 @@
 import StatusBox from "../layout/statusBox";
 import CarList from "../cars/carList";
+import PropTypes from "prop-types";
 
 const Maintenance = (props) => {
   return (
@@ -11,6 +12,11 @@ const Maintenance = (props) => {
       />
     </StatusBox>
   );
+};
+
+Maintenance.propTypes = {
+  maintenanceList: PropTypes.array,
+  setFlag: PropTypes.func,
 };
 
 export default Maintenance;

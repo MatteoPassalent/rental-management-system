@@ -2,11 +2,12 @@ import CarItem from "./carItem";
 import AddCarDialog from "../dialogs/addCarDialog";
 import { useState } from "react";
 import { Button } from "@mui/material";
+import PropTypes from "prop-types";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const CarList = (props) => {
-  const [carDialog, toggleCarDialog] = useState(false);
+  const [carDialog, setCarDialog] = useState(false);
 
   const addCar = async (car) => {
     await fetch(`${apiUrl}/add-car`, {
@@ -50,7 +51,7 @@ const CarList = (props) => {
                 backgroundColor: "#B4C1CC",
                 marginBottom: "5px",
               }}
-              onClick={() => toggleCarDialog(true)}
+              onClick={() => setCarDialog(true)}
             >
               Add Car
             </Button>
@@ -60,12 +61,18 @@ const CarList = (props) => {
       {carDialog && (
         <AddCarDialog
           open={carDialog}
-          toggleOpen={toggleCarDialog}
+          toggleOpen={setCarDialog}
           addCar={addCar}
         />
       )}
     </>
   );
+};
+
+CarList.propTypes = {
+  status: PropTypes.string,
+  cars: PropTypes.array,
+  setFlag: PropTypes.func,
 };
 
 export default CarList;

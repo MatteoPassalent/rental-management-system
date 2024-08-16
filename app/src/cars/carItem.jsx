@@ -5,13 +5,14 @@ import MaintenanceDialog from "../dialogs/maintenanceDialog";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import ConfirmDialog from "../dialogs/confirmDialog";
-
+import PropTypes from "prop-types";
+// TODO: ADD CSS CLASSES FOR BUTTONS, fix margin
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const CarItem = (props) => {
-  const [openRentDialog, toggleRentDialog] = useState(false);
-  const [openMaintenanceDialog, toggleMaintenanceDialog] = useState(false);
-  const [openConfirmDialog, toggleConfirmDialog] = useState(false);
+  const [rentDialog, setRentDialog] = useState(false);
+  const [maintenanceDialog, setMaintenanceDialog] = useState(false);
+  const [confirmDialog, setConfirmDialog] = useState(false);
 
   const updateStatus = async (status) => {
     await fetch(`${apiUrl}/update-status`, {
@@ -84,13 +85,13 @@ const CarItem = (props) => {
               right: "5px",
               color: "lightgrey",
             }}
-            onClick={() => toggleConfirmDialog(true)}
+            onClick={() => setConfirmDialog(true)}
           >
             <DeleteIcon />
           </IconButton>
         </div>
-        {props.status === "inventory" && (
-          <div style={{ width: "100%" }}>
+        <div style={{ width: "100%" }}>
+          {(props.status === "inventory" || props.status === "maintenance") && (
             <Button
               variant="contained"
               color="inherit"
@@ -100,39 +101,27 @@ const CarItem = (props) => {
                 width: "100%",
                 backgroundColor: "#B4C1CC",
               }}
-              onClick={() => toggleRentDialog(true)}
+              onClick={() => setRentDialog(true)}
             >
               Rent Out
             </Button>
+          )}
+          {(props.status === "inventory" || props.status === "rented") && (
             <Button
               variant="contained"
               color="inherit"
               sx={{
                 marginRight: "10px",
+                marginBottom: "10px",
                 width: "100%",
                 backgroundColor: "#B4C1CC",
               }}
-              onClick={() => toggleMaintenanceDialog(true)}
+              onClick={() => setMaintenanceDialog(true)}
             >
               Maintence
             </Button>
-          </div>
-        )}
-        {props.status === "maintenance" && (
-          <div style={{ width: "100%" }}>
-            <Button
-              variant="contained"
-              color="inherit"
-              sx={{
-                marginRight: "10px",
-                marginBottom: "10px",
-                width: "100%",
-                backgroundColor: "#B4C1CC",
-              }}
-              onClick={() => toggleRentDialog(true)}
-            >
-              Rent Out
-            </Button>
+          )}
+          {(props.status === "maintenance" || props.status === "rented") && (
             <Button
               variant="contained"
               color="inherit"
@@ -145,62 +134,39 @@ const CarItem = (props) => {
             >
               Return to Inventory
             </Button>
-          </div>
-        )}
-        {props.status === "rented" && (
-          <div style={{ width: "100%" }}>
-            <Button
-              variant="contained"
-              color="inherit"
-              sx={{
-                marginRight: "10px",
-                marginBottom: "10px",
-                width: "100%",
-                backgroundColor: "#B4C1CC",
-              }}
-              onClick={() => toggleMaintenanceDialog(true)}
-            >
-              Maintence
-            </Button>
-            <Button
-              variant="contained"
-              color="inherit"
-              sx={{
-                marginRight: "10px",
-                width: "100%",
-                backgroundColor: "#B4C1CC",
-              }}
-              onClick={() => updateStatus("inventory")}
-            >
-              Return to Inventory
-            </Button>
-          </div>
-        )}
-        {openRentDialog && (
+          )}
+        </div>
+        {rentDialog && (
           <RentDialog
-            open={openRentDialog}
+            open={rentDialog}
             car={props.car}
-            toggleOpen={toggleRentDialog}
+            toggleOpen={setRentDialog}
             updateStatus={updateStatus}
           />
         )}
-        {openMaintenanceDialog && (
+        {maintenanceDialog && (
           <MaintenanceDialog
-            open={openMaintenanceDialog}
-            toggleOpen={toggleMaintenanceDialog}
+            open={maintenanceDialog}
+            toggleOpen={setMaintenanceDialog}
             updateStatus={updateStatus}
           />
         )}
-        {openConfirmDialog && (
+        {confirmDialog && (
           <ConfirmDialog
-            open={openConfirmDialog}
-            toggleOpen={toggleConfirmDialog}
+            open={confirmDialog}
+            toggleOpen={setConfirmDialog}
             handleDelete={handleDelete}
           />
         )}
       </div>
     </Card>
   );
+};
+
+CarItem.propTypes = {
+  car: PropTypes.object,
+  status: PropTypes.string,
+  setFlag: PropTypes.func,
 };
 
 export default CarItem;

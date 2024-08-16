@@ -7,6 +7,7 @@ import {
   TextField,
   Button,
 } from "@mui/material";
+import PropTypes from "prop-types";
 
 const MaintenanceDialog = (props) => {
   const [days, setDays] = useState(0);
@@ -41,6 +42,12 @@ const MaintenanceDialog = (props) => {
       </form>
     </Dialog>
   );
+};
+
+MaintenanceDialog.propTypes = {
+  open: PropTypes.bool,
+  toggleOpen: PropTypes.func,
+  updateStatus: PropTypes.func,
 };
 
 export default MaintenanceDialog;

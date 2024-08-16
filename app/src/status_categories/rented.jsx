@@ -1,5 +1,6 @@
 import StatusBox from "../layout/statusBox";
 import CarList from "../cars/carList";
+import PropTypes from "prop-types";
 
 const Rented = (props) => {
   return (
@@ -11,6 +12,11 @@ const Rented = (props) => {
       />
     </StatusBox>
   );
+};
+
+Rented.propTypes = {
+  rentedList: PropTypes.array,
+  setFlag: PropTypes.func,
 };
 
 export default Rented;
