@@ -6,18 +6,9 @@ cars = Blueprint("cars", __name__, url_prefix="/api")
 
 @cars.route("/add-car", methods=["POST"])
 def add_car():
-    make = request.json.get("make")
-    model = request.json.get("model")
-    year = request.json.get("year")
-    color = request.json.get("color")
-    license_plate = request.json.get("licensePlate")
-
+    car_data = request.json
     car = Car(
-        make=make,
-        model=model,
-        year=year,
-        color=color,
-        licensePlate=license_plate,
+        **car_data,
         status="inventory",
         rentedTo=None,
         daysRemaining=None,
@@ -39,13 +30,10 @@ def get_cars():
     inventory = Car.query.filter_by(status="inventory").all()
     maintenance = Car.query.filter_by(status="maintenance").all()
     rented = Car.query.filter_by(status="rented").all()
-    inventory_list = create_list(inventory)
-    maintenance_list = create_list(maintenance)
-    rented_list = create_list(rented)
     car_lists = {
-        "inventory": inventory_list,
-        "maintenance": maintenance_list,
-        "rented": rented_list,
+        "inventory": create_list(inventory),
+        "maintenance": create_list(maintenance),
+        "rented": create_list(rented),
     }
     return jsonify(car_lists), 200
 

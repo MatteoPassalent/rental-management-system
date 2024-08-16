@@ -16,10 +16,9 @@ def update_status():
 @status_catergory.route("/rent-car", methods=["PUT"])
 def rent_car():
     car_id = request.json.get("carId")
-    customer = request.json.get("customerId")
+    customer_id = request.json.get("customerId")
     car = Car.query.get(car_id)
-    customer = Customer.query.get(customer)
-    car.status = "rented"
+    customer = Customer.query.get(customer_id)
     car.rentedTo = customer.id
     customer.cars.append(car)
     db.session.commit()

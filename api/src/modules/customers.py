@@ -15,11 +15,5 @@ def add_new_customer():
 @customers.route("/get-customers")
 def get_customers():
     customers = Customer.query.all()
-    customer_list = []
-    for customer in customers:
-        customer_data = {
-            "id": customer.id,
-            "name": customer.name,
-        }
-        customer_list.append(customer_data)
+    customer_list = [{"id": customer.id, "name": customer.name} for customer in customers]
     return jsonify(customer_list), 200
