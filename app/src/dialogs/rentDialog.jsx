@@ -16,7 +16,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 const RentDialog = (props) => {
   const [customer, setCustomer] = useState({ name: "", id: "" });
-  const [days, setDays] = useState(0);
+  const [days, setDays] = useState(null);
   const [customerOptions, setCustomerOptions] = useState([
     { name: "", id: "" },
   ]);

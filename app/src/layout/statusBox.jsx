@@ -9,35 +9,35 @@ const StatusBox = (props) => {
         width: "30%",
         display: "flex",
         flexDirection: "column",
+        boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.2)",
+        boxSizing: "border-box",
       }}
     >
       <AppBar
         position="static"
         sx={{
-          backgroundColor: "#546C78",
+          color: "#1976d2",
+          backgroundColor: "white",
           height: "30px",
-          display: "flex",
-          alignItems: "center",
+          alignItems: "left",
+          paddingLeft: "15px",
           justifyContent: "center",
-          borderTopLeftRadius: "10px",
-          borderTopRightRadius: "10px",
           boxShadow: "none",
+          fontWeight: "bold",
+          fontSize: "1.3rem",
         }}
       >
         {props.name}
       </AppBar>
       <Box
         sx={{
-          height: "100%",
+          height: "calc(100% - 30px)",
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-start",
           alignItems: "flex-start",
-          backgroundColor: "lightgrey",
-          borderBottomLeftRadius: "10px",
-          borderBottomRightRadius: "10px",
-          padding: "20px",
           boxSizing: "border-box",
+          backgroundColor: "White",
         }}
       >
         {props.children}

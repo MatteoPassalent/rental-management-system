@@ -10,7 +10,7 @@ import {
 import PropTypes from "prop-types";
 
 const MaintenanceDialog = (props) => {
-  const [days, setDays] = useState(0);
+  const [days, setDays] = useState(null);
 
   const handleClose = () => {
     props.toggleOpen(false);

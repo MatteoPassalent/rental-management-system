@@ -5,11 +5,12 @@ const HeaderBar = () => {
     <AppBar
       position="static"
       sx={{
-        backgroundColor: "#546C78",
+        backgroundColor: "#1976D2",
         height: "50px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        fontSize: "1.3rem",
       }}
     >
       Rental Car Management System
@@ -18,9 +19,3 @@ const HeaderBar = () => {
 };
 
 export default HeaderBar;
-
-// darker blue: 394B55
-
-// light grey: #F4F4F4
-// lighter blue: B4C1CC
-// // medium blue: 546C78

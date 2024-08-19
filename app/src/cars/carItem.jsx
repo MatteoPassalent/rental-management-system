@@ -43,9 +43,9 @@ const CarItem = (props) => {
   return (
     <Card
       sx={{
-        marginBottom: "10px",
         height: "150px",
-        borderRadius: "10px",
+        borderRadius: "0px",
+        borderBottom: "1px solid lightgrey",
         display: "flex",
         justifyContent: "left",
         alignItems: "top",
@@ -81,9 +81,10 @@ const CarItem = (props) => {
         >
           <IconButton
             sx={{
-              top: "5px",
-              right: "5px",
-              color: "lightgrey",
+              padding: "0px",
+              marginTop: "10px",
+              marginBottom: "5px",
+              color: "grey",
             }}
             onClick={() => setConfirmDialog(true)}
           >
@@ -93,13 +94,10 @@ const CarItem = (props) => {
         <div style={{ width: "100%" }}>
           {(props.status === "inventory" || props.status === "maintenance") && (
             <Button
-              variant="contained"
-              color="inherit"
+              variant="outlined"
               sx={{
-                marginRight: "10px",
                 marginBottom: "10px",
                 width: "100%",
-                backgroundColor: "#B4C1CC",
               }}
               onClick={() => setRentDialog(true)}
             >
@@ -108,13 +106,10 @@ const CarItem = (props) => {
           )}
           {(props.status === "inventory" || props.status === "rented") && (
             <Button
-              variant="contained"
-              color="inherit"
+              variant="outlined"
               sx={{
-                marginRight: "10px",
                 marginBottom: "10px",
                 width: "100%",
-                backgroundColor: "#B4C1CC",
               }}
               onClick={() => setMaintenanceDialog(true)}
             >
@@ -123,16 +118,14 @@ const CarItem = (props) => {
           )}
           {(props.status === "maintenance" || props.status === "rented") && (
             <Button
-              variant="contained"
-              color="inherit"
+              variant="outlined"
               sx={{
-                marginRight: "10px",
                 width: "100%",
-                backgroundColor: "#B4C1CC",
+                marginBottom: "10px",
               }}
               onClick={() => updateStatus("inventory")}
             >
-              Return to Inventory
+              Return
             </Button>
           )}
         </div>

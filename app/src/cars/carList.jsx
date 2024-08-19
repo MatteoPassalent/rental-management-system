@@ -41,21 +41,17 @@ const CarList = (props) => {
           />
         ))}
         {props.status === "inventory" && (
-          <li>
-            <Button
-              variant="contained"
-              color="inherit"
-              sx={{
-                marginRight: "10px",
-                width: "100%",
-                backgroundColor: "#B4C1CC",
-                marginBottom: "5px",
-              }}
-              onClick={() => setCarDialog(true)}
-            >
-              Add Car
-            </Button>
-          </li>
+          <Button
+            variant="contained"
+            sx={{
+              borderRadius: "0px",
+              width: "100%",
+              marginBottom: "2px",
+            }}
+            onClick={() => setCarDialog(true)}
+          >
+            Add Car
+          </Button>
         )}
       </ul>
       {carDialog && (
