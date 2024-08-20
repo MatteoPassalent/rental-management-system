@@ -19,12 +19,14 @@ def create_app():
     from src.modules.cars import cars
     from src.modules.customers import customers
     from src.modules.status_catergory import status_catergory
-    from src.modules.dev import dev
 
     app.register_blueprint(cars)
     app.register_blueprint(customers)
     app.register_blueprint(status_catergory)
-    app.register_blueprint(dev)
+
+    if os.getenv("FLASK_ENV") == "development":
+        from src.modules.dev import dev
+        app.register_blueprint(dev)
 
     with app.app_context():
         if not path.exists("/api/instance/database.db"):
