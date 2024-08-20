@@ -30,11 +30,9 @@ jobs:
       - name: Create .ssh directory
         run: mkdir -p ~/.ssh
 
-      - name: Start .ssh service
-        run: eval "$(ssh-agent -s)"
-
       - name: Add SSH priv key and known host
         run: |
+          eval "$(ssh-agent -s)"
           echo "$SSH_KEY" | ssh-add -
           echo "$PUB_SSH_KEY" >> ~/.ssh/known_hosts
         env:
