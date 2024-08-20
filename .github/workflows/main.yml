@@ -30,13 +30,13 @@ jobs:
       - name: Create .ssh directory
         run: mkdir -p ~/.ssh
 
-      - name: Add SSH priv key
-        run: |
-          eval "$(ssh-agent -s)"
-          echo "$SSH_KEY" | ssh-add -
-          ssh-add -l
-        env:
-          SSH_KEY: ${{ secrets.SSH_KEY }}
+      # - name: Add SSH priv key
+      #   run: |
+      #     eval "$(ssh-agent -s)"
+      #     echo "$SSH_KEY" | ssh-add -
+      #     ssh-add -l
+      #   env:
+      #     SSH_KEY: ${{ secrets.SSH_KEY }}
 
       # - name: Add SSH key
       #   uses: webfactory/ssh-agent@v0.5.3
@@ -49,6 +49,8 @@ jobs:
 
       - name: Deploy to Raspberry Pi
         run: |
+          eval "$(ssh-agent -s)"
+          echo "$SSH_KEY" | ssh-add -
           scp -r ./app/build/* matteopassalent@matteopassalent.com:~/rental-management-system/app/build/
           ssh matteopassalent@matteopassalent.com 'cd ~/rental-management-system/deployment/ && ./deploy.sh'
         env:
