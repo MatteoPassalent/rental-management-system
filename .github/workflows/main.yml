@@ -36,6 +36,9 @@ jobs:
           echo "$SSH_KEY" | ssh-add -
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
+
+      - name: Verify SSH key
+        run: ssh-add -l
           
       # - name: Add SSH key
       #   uses: webfactory/ssh-agent@v0.5.3
