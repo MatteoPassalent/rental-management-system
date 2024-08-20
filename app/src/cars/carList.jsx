@@ -24,7 +24,6 @@ const CarList = (props) => {
   return (
     <>
       <ul
-        className="custom-scrollbar"
         style={{
           width: "100%",
           padding: "0",

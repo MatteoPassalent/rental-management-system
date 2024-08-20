@@ -6,10 +6,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import ConfirmDialog from "../dialogs/confirmDialog";
 import PropTypes from "prop-types";
+import { useMediaQuery } from "@mui/material";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const CarItem = (props) => {
+  const isReduced = useMediaQuery("(max-width:1270px)");
+
   const [rentDialog, setRentDialog] = useState(false);
   const [maintenanceDialog, setMaintenanceDialog] = useState(false);
   const [confirmDialog, setConfirmDialog] = useState(false);
@@ -49,6 +52,7 @@ const CarItem = (props) => {
         display: "flex",
         boxSizing: "border-box",
         padding: "10px 15px 10px 15px",
+        justifyContent: isReduced ? "center" : "flex-start",
       }}
     >
       <div style={{ minWidth: "75px" }}>
