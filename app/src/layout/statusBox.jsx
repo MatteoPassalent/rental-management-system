@@ -5,12 +5,8 @@ const StatusBox = (props) => {
   return (
     <div
       style={{
-        height: "100%",
         width: "30%",
-        display: "flex",
-        flexDirection: "column",
         boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.2)",
-        boxSizing: "border-box",
       }}
     >
       <AppBar
@@ -18,7 +14,7 @@ const StatusBox = (props) => {
         sx={{
           color: "#1976d2",
           backgroundColor: "white",
-          height: "30px",
+          height: "35px",
           alignItems: "left",
           paddingLeft: "15px",
           justifyContent: "center",
@@ -36,7 +32,6 @@ const StatusBox = (props) => {
           flexDirection: "column",
           justifyContent: "flex-start",
           alignItems: "flex-start",
-          boxSizing: "border-box",
           backgroundColor: "White",
         }}
       >

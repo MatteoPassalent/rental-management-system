@@ -11,12 +11,7 @@ const Layout = () => {
         maxWidth={false}
         sx={{
           height: "calc(100vh - 50px)",
-          width: "100vw",
           backgroundColor: "#F6F8FC",
-          display: "flex",
-          alignItems: "center",
-          margin: 0,
-          boxSizing: "border-box",
         }}
       >
         <div

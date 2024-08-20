@@ -24,6 +24,7 @@ const CarList = (props) => {
   return (
     <>
       <ul
+        className="custom-scrollbar"
         style={{
           width: "100%",
           padding: "0",
@@ -46,7 +47,7 @@ const CarList = (props) => {
             sx={{
               borderRadius: "0px",
               width: "100%",
-              marginBottom: "2px",
+              marginBottom: "1px",
             }}
             onClick={() => setCarDialog(true)}
           >

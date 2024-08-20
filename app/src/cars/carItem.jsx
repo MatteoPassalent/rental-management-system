@@ -6,7 +6,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import ConfirmDialog from "../dialogs/confirmDialog";
 import PropTypes from "prop-types";
-// TODO: ADD CSS CLASSES FOR BUTTONS, fix margin
+
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const CarItem = (props) => {
@@ -47,25 +47,24 @@ const CarItem = (props) => {
         borderRadius: "0px",
         borderBottom: "1px solid lightgrey",
         display: "flex",
-        justifyContent: "left",
-        alignItems: "top",
         boxSizing: "border-box",
-        paddingBottom: "15px",
-        paddingLeft: "15px",
-        flexDirection: "row",
+        padding: "10px 15px 10px 15px",
       }}
     >
-      <div
-        style={{ marginRight: "15px", marginTop: "15px", minWidth: "105px" }}
-      >
+      <div style={{ minWidth: "75px" }}>
         <Typography>Make: </Typography>
         <Typography>Model: </Typography>
         <Typography>Year: </Typography>
         <Typography>Colour: </Typography>
-        <Typography>Plate Number: </Typography>
+        <Typography>Plate: </Typography>
       </div>
       <div
-        style={{ marginRight: "20px", marginTop: "15px", minWidth: "100px" }}
+        style={{
+          marginRight: "15px",
+          minWidth: "100px",
+          maxWidth: "100px",
+          overflow: "hidden",
+        }}
       >
         <Typography>{props.car.make}</Typography>
         <Typography>{props.car.model}</Typography>
@@ -73,16 +72,11 @@ const CarItem = (props) => {
         <Typography>{props.car.color}</Typography>
         <Typography>{props.car.licensePlate}</Typography>
       </div>
-      <div
-        style={{ flexDirection: "column", width: "100%", marginRight: "15px" }}
-      >
-        <div
-          style={{ display: "flex", width: "100%", justifyContent: "right" }}
-        >
+      <div>
+        <div style={{ display: "flex", justifyContent: "right" }}>
           <IconButton
             sx={{
               padding: "0px",
-              marginTop: "10px",
               marginBottom: "5px",
               color: "grey",
             }}
@@ -91,67 +85,65 @@ const CarItem = (props) => {
             <DeleteIcon />
           </IconButton>
         </div>
-        <div style={{ width: "100%" }}>
-          {(props.status === "inventory" || props.status === "maintenance") && (
-            <Button
-              variant="outlined"
-              sx={{
-                marginBottom: "10px",
-                width: "100%",
-              }}
-              onClick={() => setRentDialog(true)}
-            >
-              Rent Out
-            </Button>
-          )}
-          {(props.status === "inventory" || props.status === "rented") && (
-            <Button
-              variant="outlined"
-              sx={{
-                marginBottom: "10px",
-                width: "100%",
-              }}
-              onClick={() => setMaintenanceDialog(true)}
-            >
-              Maintence
-            </Button>
-          )}
-          {(props.status === "maintenance" || props.status === "rented") && (
-            <Button
-              variant="outlined"
-              sx={{
-                width: "100%",
-                marginBottom: "10px",
-              }}
-              onClick={() => updateStatus("inventory")}
-            >
-              Return
-            </Button>
-          )}
-        </div>
-        {rentDialog && (
-          <RentDialog
-            open={rentDialog}
-            car={props.car}
-            toggleOpen={setRentDialog}
-            updateStatus={updateStatus}
-          />
+        {(props.status === "inventory" || props.status === "maintenance") && (
+          <Button
+            variant="outlined"
+            sx={{
+              marginBottom: "10px",
+              width: "100%",
+            }}
+            onClick={() => setRentDialog(true)}
+          >
+            Rent Out
+          </Button>
         )}
-        {maintenanceDialog && (
-          <MaintenanceDialog
-            open={maintenanceDialog}
-            toggleOpen={setMaintenanceDialog}
-            updateStatus={updateStatus}
-          />
+        {(props.status === "inventory" || props.status === "rented") && (
+          <Button
+            variant="outlined"
+            sx={{
+              marginBottom: "10px",
+              width: "100%",
+            }}
+            onClick={() => setMaintenanceDialog(true)}
+          >
+            Maintence
+          </Button>
         )}
-        {confirmDialog && (
-          <ConfirmDialog
-            open={confirmDialog}
-            toggleOpen={setConfirmDialog}
-            handleDelete={handleDelete}
-          />
+        {(props.status === "maintenance" || props.status === "rented") && (
+          <Button
+            variant="outlined"
+            sx={{
+              width: "100%",
+              marginBottom: "10px",
+            }}
+            onClick={() => updateStatus("inventory")}
+          >
+            Return
+          </Button>
         )}
       </div>
+      {rentDialog && (
+        <RentDialog
+          open={rentDialog}
+          car={props.car}
+          toggleOpen={setRentDialog}
+          updateStatus={updateStatus}
+        />
+      )}
+      {maintenanceDialog && (
+        <MaintenanceDialog
+          open={maintenanceDialog}
+          toggleOpen={setMaintenanceDialog}
+          updateStatus={updateStatus}
+        />
+      )}
+      {confirmDialog && (
+        <ConfirmDialog
+          open={confirmDialog}
+          toggleOpen={setConfirmDialog}
+          handleDelete={handleDelete}
+        />
+      )}
     </Card>
   );
 };
