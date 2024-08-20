@@ -1,4 +1,4 @@
-import { Card, Typography, Button } from "@mui/material";
+import { Card, Typography, Button, useMediaQuery } from "@mui/material";
 import RentDialog from "../dialogs/rentDialog";
 import { useState } from "react";
 import MaintenanceDialog from "../dialogs/maintenanceDialog";
@@ -6,7 +6,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import ConfirmDialog from "../dialogs/confirmDialog";
 import PropTypes from "prop-types";
-import { useMediaQuery } from "@mui/material";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 

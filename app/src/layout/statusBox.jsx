@@ -1,6 +1,5 @@
-import { Box, AppBar } from "@mui/material";
+import { Box, AppBar, useMediaQuery } from "@mui/material";
 import PropTypes from "prop-types";
-import { useMediaQuery } from "@mui/material";
 
 const StatusBox = (props) => {
   const isReduced = useMediaQuery("(max-width:1270px)");
