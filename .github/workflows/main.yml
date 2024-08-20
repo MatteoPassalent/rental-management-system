@@ -17,6 +17,9 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Nav to app directory
+        run: cd app
+
       - name: Install dependencies
         run: npm install
 
