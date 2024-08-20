@@ -40,6 +40,6 @@ jobs:
       - name: Deploy to Raspberry Pi
         run: |
           scp -r ./app/build/* matteopassalent@matteopassalent.com:~/rental-management-system/app/build/
-          ssh matteopassalent@matteopassalent.com 'cd ~/rental-management-system/deployment/ && ./deploy.sh
+          ssh matteopassalent@matteopassalent.com 'cd ~/rental-management-system/deployment/ && ./deploy.sh'
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
