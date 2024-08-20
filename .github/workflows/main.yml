@@ -27,6 +27,11 @@ jobs:
           cd app
           npm run build
 
+      - name: Add SSH key
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+
       - name: Deploy to Raspberry Pi
         run: |
           scp -r ./app/build/* matteopassalent@matteopassalent.com:/rental-management-system/app/build/
