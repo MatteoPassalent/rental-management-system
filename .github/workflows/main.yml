@@ -23,11 +23,13 @@ jobs:
           npm install
 
       - name: Build React app
-        run: npm run buid
+        run: |
+          cd app
+          npm run buid
 
       - name: Deploy to Raspberry Pi
         run: |
-          scp -r ./build/* matteopassalent@matteopassalent.com:/rental-management-system/app/build/
+          scp -r ./app/build/* matteopassalent@matteopassalent.com:/rental-management-system/app/build/
           ssh matteopassalent@matteopassalent.com 'cd rental-management-system/deployment/ && ./deploy.sh
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
