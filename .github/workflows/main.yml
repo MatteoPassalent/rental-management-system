@@ -28,14 +28,22 @@ jobs:
           REACT_APP_API_URL="https://matteopassalent.com/api" npm run build
 
       - name: Add SSH key
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_KEY }}
-
-      - name: Add Raspberry Pi to known_hosts
         run: |
-          ssh-keyscan -H matteopassalent.com >> ~/.ssh/known_hosts
+          eval "$(ssh-agent -s)"
+          echo "$SSH_KEY" | ssh-add -
+          echo "$PUB_SSH_KEY" >> ~/.ssh/known_hosts
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          PUB_SSH_KEY: ${{ secrets.PUB_SSH_KEY }}
 
+      # - name: Add SSH key
+      #   uses: webfactory/ssh-agent@v0.5.3
+      #   with:
+      #     ssh-private-key: ${{ secrets.SSH_KEY }}
+
+      # - name: Add Raspberry Pi to known_hosts
+      #   run: |
+      #     ssh-keyscan -H matteopassalent.com >> ~/.ssh/known_hosts
 
       - name: Deploy to Raspberry Pi
         run: |
