@@ -11,9 +11,21 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
+      - name: Set up node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build React app
+        run: npm run buid
 
       - name: Deploy to Raspberry Pi
         run: |
-          ssh matteopassalent@matteopassalent.com 'cd rental-management-system/ && ./deploy.sh
+          scp -r ./build/* matteopassalent@matteopassalent.com:/rental-management-system/app/build/
+          ssh matteopassalent@matteopassalent.com 'cd rental-management-system/deployment/ && ./deploy.sh
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
