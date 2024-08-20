@@ -1,45 +1,45 @@
-name: Deploy to Raspberry Pi
+# name: Deploy to Raspberry Pi
 
-on:
-  push:
-    branches:
-      - prod
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+# on:
+#   push:
+#     branches:
+#       - prod
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
         
-      - name: Set up node
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20'
+#       - name: Set up node
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: '20'
 
-      - name: Install dependencies
-        run: | 
-          cd app
-          npm install
+#       - name: Install dependencies
+#         run: | 
+#           cd app
+#           npm install
 
-      - name: Build React app
-        run: |
-          cd app
-          npm run build
+#       - name: Build React app
+#         run: |
+#           cd app
+#           REACT_APP_API_URL="https://matteopassalent.com/api" npm run build
 
-      - name: Add SSH key
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_KEY }}
+#       - name: Add SSH key
+#         uses: webfactory/ssh-agent@v0.5.3
+#         with:
+#           ssh-private-key: ${{ secrets.SSH_KEY }}
 
-      - name: Add Raspberry Pi to known_hosts
-        run: |
-          ssh-keyscan -H matteopassalent.com >> ~/.ssh/known_hosts
+#       - name: Add Raspberry Pi to known_hosts
+#         run: |
+#           ssh-keyscan -H matteopassalent.com >> ~/.ssh/known_hosts
 
 
-      - name: Deploy to Raspberry Pi
-        run: |
-          scp -r ./app/build/* matteopassalent@matteopassalent.com:~/rental-management-system/app/build/
-          ssh matteopassalent@matteopassalent.com 'cd ~/rental-management-system/deployment/ && ./deploy.sh'
-        env:
-          SSH_KEY: ${{ secrets.SSH_KEY }}
+#       - name: Deploy to Raspberry Pi
+#         run: |
+#           scp -r ./app/build/* matteopassalent@matteopassalent.com:~/rental-management-system/app/build/
+#           ssh matteopassalent@matteopassalent.com 'cd ~/rental-management-system/deployment/ && ./deploy.sh'
+#         env:
+#           SSH_KEY: ${{ secrets.SSH_KEY }}
