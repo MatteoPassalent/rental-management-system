@@ -1,0 +1,19 @@
+name: Deploy to Raspberry Pi
+
+on:
+  push:
+    branches:
+      - prod
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy to Raspberry Pi
+        run: |
+          ssh matteopassalent@matteopassalent.com 'cd rental-management-system/ && ./deploy.sh
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
