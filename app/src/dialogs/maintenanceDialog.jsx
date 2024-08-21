@@ -12,6 +12,13 @@ import PropTypes from "prop-types";
 const MaintenanceDialog = (props) => {
   const [days, setDays] = useState("");
 
+  const handleDaysChange = (event) => {
+    const value = event.target.value;
+    if (value === "" || Number(value) > 0) {
+      setDays(value);
+    }
+  };
+
   const handleClose = () => {
     props.toggleOpen(false);
   };
@@ -29,7 +36,7 @@ const MaintenanceDialog = (props) => {
             autoFocus
             margin="dense"
             value={days}
-            onChange={(event) => setDays(event.target.value)}
+            onChange={handleDaysChange}
             type="number"
             label="Number of Days"
             variant="outlined"
@@ -37,7 +44,9 @@ const MaintenanceDialog = (props) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Submit</Button>
+          <Button disabled={!days} type="submit">
+            Submit
+          </Button>
         </DialogActions>
       </form>
     </Dialog>

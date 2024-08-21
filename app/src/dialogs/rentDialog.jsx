@@ -1,5 +1,5 @@
 // button opens dialog to rent, autocomplete for customer, just keeps track of name.
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -20,6 +20,17 @@ const RentDialog = (props) => {
   const [customerOptions, setCustomerOptions] = useState([
     { name: "", id: "" },
   ]);
+
+  const isValid = useMemo(() => {
+    return customer?.name && days;
+  }, [customer, days]);
+
+  const handleDaysChange = (event) => {
+    const value = event.target.value;
+    if (value === "" || Number(value) > 0) {
+      setDays(value);
+    }
+  };
 
   const filter = createFilterOptions();
 
@@ -124,7 +135,7 @@ const RentDialog = (props) => {
             autoFocus
             margin="dense"
             value={days}
-            onChange={(event) => setDays(event.target.value)}
+            onChange={handleDaysChange}
             type="number"
             label="Number of Days"
             variant="outlined"
@@ -132,7 +143,9 @@ const RentDialog = (props) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Submit</Button>
+          <Button disabled={!isValid} type="submit">
+            Submit
+          </Button>
         </DialogActions>
       </form>
     </Dialog>
