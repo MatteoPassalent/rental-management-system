@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -18,6 +18,12 @@ const AddCarDialog = (props) => {
     color: "",
     licensePlate: "",
   });
+
+  const isValid = useMemo(() => {
+    return (
+      car?.make && car?.model && car?.year && car?.color && car?.licensePlate
+    );
+  }, [car]);
 
   const handleClose = () => {
     props.toggleOpen(false);
@@ -105,7 +111,9 @@ const AddCarDialog = (props) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Add</Button>
+          <Button disabled={!isValid} type="submit">
+            Add
+          </Button>
         </DialogActions>
       </form>
     </Dialog>
