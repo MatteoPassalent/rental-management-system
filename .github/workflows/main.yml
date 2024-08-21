@@ -22,6 +22,11 @@ jobs:
           cd app
           npm install
 
+      - name: Run tests
+        run: | 
+          cd app
+          npm test
+
       - name: Build React app
         run: |
           cd app
