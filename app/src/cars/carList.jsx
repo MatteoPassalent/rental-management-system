@@ -32,14 +32,17 @@ const CarList = (props) => {
           overflowX: "hidden",
         }}
       >
-        {props.cars?.map((car) => (
-          <CarItem
-            key={car.id}
-            car={car}
-            status={props.status}
-            setFlag={props.setFlag}
-          />
-        ))}
+        {props.cars
+          ?.slice()
+          .sort((a, b) => a.daysRemaining - b.daysRemaining)
+          .map((car) => (
+            <CarItem
+              key={car.id}
+              car={car}
+              status={props.status}
+              setFlag={props.setFlag}
+            />
+          ))}
         {props.status === "inventory" && (
           <Button
             variant="contained"

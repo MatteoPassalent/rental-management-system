@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from src.models import Car
+from src.models import Car, Customer
 from .. import db
 
 dev = Blueprint("dev", __name__, url_prefix="/api")
@@ -16,6 +16,14 @@ def seed_db():
     db.drop_all()
     db.create_all()
 
+    john_doe = Customer(name="John Doe", cars=[])
+    jane_smith = Customer(name="Jane Doe", cars=[])
+    alice_johnson = Customer(name="Alice Johnson", cars=[])
+    alex_johnson = Customer(name="Alex Johnson", cars=[])
+
+    db.session.add_all([john_doe, jane_smith, alice_johnson, alex_johnson])
+    db.session.commit()
+
     cars = [
         Car(
             make="Toyota",
@@ -24,7 +32,8 @@ def seed_db():
             color="Black",
             licensePlate="ABC123",
             status="inventory",
-            rentedTo=None,
+            currCustomerName="",
+            currCustomerId=None,
             daysRemaining=None,
         ),
         Car(
@@ -34,7 +43,8 @@ def seed_db():
             color="Blue",
             licensePlate="JKL012",
             status="inventory",
-            rentedTo=None,
+            currCustomerName="",
+            currCustomerId=None,
             daysRemaining=None,
         ),
         Car(
@@ -44,7 +54,8 @@ def seed_db():
             color="Silver",
             licensePlate="MNO345",
             status="inventory",
-            rentedTo=None,
+            currCustomerName="",
+            currCustomerId=None,
             daysRemaining=None,
         ),
         Car(
@@ -54,8 +65,9 @@ def seed_db():
             color="White",
             licensePlate="DEF456",
             status="maintenance",
-            rentedTo=None,
-            daysRemaining=None,
+            currCustomerName="",
+            currCustomerId=None,
+            daysRemaining=8,
         ),
         Car(
             make="Nissan",
@@ -64,8 +76,9 @@ def seed_db():
             color="Gray",
             licensePlate="PQR678",
             status="maintenance",
-            rentedTo=None,
-            daysRemaining=None,
+            currCustomerName="",
+            currCustomerId=None,
+            daysRemaining=6,
         ),
         Car(
             make="Mazda",
@@ -74,8 +87,9 @@ def seed_db():
             color="Blue",
             licensePlate="STU901",
             status="maintenance",
-            rentedTo=None,
-            daysRemaining=None,
+            currCustomerName="",
+            currCustomerId=None,
+            daysRemaining=5,
         ),
         Car(
             make="Ford",
@@ -84,7 +98,8 @@ def seed_db():
             color="Red",
             licensePlate="GHI789",
             status="rented",
-            rentedTo="John Doe",
+            currCustomerName=john_doe.name,
+            currCustomerId=john_doe.id,
             daysRemaining=5,
         ),
         Car(
@@ -94,7 +109,8 @@ def seed_db():
             color="Black",
             licensePlate="VWX234",
             status="rented",
-            rentedTo="Jane Smith",
+            currCustomerName=jane_smith.name,
+            currCustomerId=jane_smith.id,
             daysRemaining=3,
         ),
         Car(
@@ -104,12 +120,18 @@ def seed_db():
             color="White",
             licensePlate="YZA567",
             status="rented",
-            rentedTo="Alice Johnson",
+            currCustomerName=alice_johnson.name,
+            currCustomerId=alice_johnson.id,
             daysRemaining=7,
         ),
     ]
 
+    john_doe.cars.append(cars[6])
+    jane_smith.cars.append(cars[7])
+    alice_johnson.cars.append(cars[8])
+
     db.session.add_all(cars)
     db.session.commit()
 
-    return jsonify({"message": "db seeded"}), 200   
+    return jsonify({"message": "db seeded"}), 200
+ 

@@ -9,8 +9,8 @@ class Car(db.Model):
     licensePlate = db.Column(db.String(50))
     status = db.Column(db.String(50))
     daysRemaining = db.Column(db.String(50))
-    rentedTo = db.Column(db.Integer, db.ForeignKey("customer.id"))
-
+    currCustomerName = db.Column(db.String(50), default="")
+    currCustomerId = db.Column(db.Integer, db.ForeignKey("customer.id"))
 
 class Customer(db.Model):
     id = db.Column(db.Integer, primary_key=True)

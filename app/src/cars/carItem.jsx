@@ -30,6 +30,21 @@ const CarItem = (props) => {
     props.setFlag((prev) => !prev);
   };
 
+  const returnCar = async () => {
+    if (props.status === "rented") {
+      await fetch(`${apiUrl}/return-car`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: props.car.id,
+        }),
+      });
+    }
+    updateStatus("inventory");
+  };
+
   const handleDelete = async () => {
     await fetch(`${apiUrl}/delete-car`, {
       method: "DELETE",
@@ -76,17 +91,36 @@ const CarItem = (props) => {
         <Typography>{props.car.licensePlate}</Typography>
       </div>
       <div>
-        <div style={{ display: "flex", justifyContent: "right" }}>
-          <IconButton
-            sx={{
-              padding: "0px",
-              marginBottom: "5px",
-              color: "grey",
+        <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent:
+                props.status === "inventory" ? "right" : "space-between",
+              alignItems: "center",
             }}
-            onClick={() => setConfirmDialog(true)}
           >
-            <DeleteIcon />
-          </IconButton>
+            {props.status === "rented" && (
+              <Typography style={{ fontSize: "12px" }}>
+                {props.car.currCustomerName}: {props.car.daysRemaining} days
+              </Typography>
+            )}
+            {props.status === "maintenance" && (
+              <Typography style={{ fontSize: "12px" }}>
+                {props.car.daysRemaining} days
+              </Typography>
+            )}
+            <IconButton
+              sx={{
+                padding: "0px",
+                marginBottom: "5px",
+                color: "grey",
+              }}
+              onClick={() => setConfirmDialog(true)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </div>
         </div>
         {(props.status === "inventory" || props.status === "maintenance") && (
           <Button
@@ -119,7 +153,7 @@ const CarItem = (props) => {
               width: "100%",
               marginBottom: "10px",
             }}
-            onClick={() => updateStatus("inventory")}
+            onClick={returnCar}
           >
             Return
           </Button>
@@ -136,6 +170,7 @@ const CarItem = (props) => {
       {maintenanceDialog && (
         <MaintenanceDialog
           open={maintenanceDialog}
+          car={props.car}
           toggleOpen={setMaintenanceDialog}
           updateStatus={updateStatus}
         />
