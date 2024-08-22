@@ -18,10 +18,10 @@ def seed_db():
 
     john_doe = Customer(name="John Doe", cars=[])
     jane_smith = Customer(name="Jane Doe", cars=[])
-    alice_johnson = Customer(name="Alice Johnson", cars=[])
-    alex_johnson = Customer(name="Alex Johnson", cars=[])
+    alice_smith = Customer(name="Alice Smith", cars=[])
+    alex_smith = Customer(name="Alex Smith", cars=[])
 
-    db.session.add_all([john_doe, jane_smith, alice_johnson, alex_johnson])
+    db.session.add_all([john_doe, jane_smith, alice_smith, alex_smith])
     db.session.commit()
 
     cars = [
@@ -120,15 +120,15 @@ def seed_db():
             color="White",
             licensePlate="YZA567",
             status="rented",
-            currCustomerName=alice_johnson.name,
-            currCustomerId=alice_johnson.id,
+            currCustomerName=alice_smith.name,
+            currCustomerId=alice_smith.id,
             daysRemaining=7,
         ),
     ]
 
     john_doe.cars.append(cars[6])
     jane_smith.cars.append(cars[7])
-    alice_johnson.cars.append(cars[8])
+    alice_smith.cars.append(cars[8])
 
     db.session.add_all(cars)
     db.session.commit()

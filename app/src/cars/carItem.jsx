@@ -1,4 +1,4 @@
-import { Card, Typography, Button, useMediaQuery } from "@mui/material";
+import { Card, Typography, Button } from "@mui/material";
 import RentDialog from "../dialogs/rentDialog";
 import { useState } from "react";
 import MaintenanceDialog from "../dialogs/maintenanceDialog";
@@ -10,8 +10,6 @@ import PropTypes from "prop-types";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const CarItem = (props) => {
-  const isReduced = useMediaQuery("(max-width:1270px)");
-
   const [rentDialog, setRentDialog] = useState(false);
   const [maintenanceDialog, setMaintenanceDialog] = useState(false);
   const [confirmDialog, setConfirmDialog] = useState(false);
@@ -61,12 +59,12 @@ const CarItem = (props) => {
     <Card
       sx={{
         height: "150px",
+        maxWidth: "460px",
         borderRadius: "0px",
         borderBottom: "1px solid lightgrey",
         display: "flex",
         boxSizing: "border-box",
         padding: "10px 15px 10px 15px",
-        justifyContent: isReduced ? "center" : "flex-start",
       }}
     >
       <div style={{ minWidth: "75px" }}>
@@ -90,37 +88,41 @@ const CarItem = (props) => {
         <Typography>{props.car.color}</Typography>
         <Typography>{props.car.licensePlate}</Typography>
       </div>
-      <div>
-        <div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent:
-                props.status === "inventory" ? "right" : "space-between",
-              alignItems: "center",
+      <div
+        style={{
+          overflow: "hidden",
+          width: "100%",
+          maxWidth: "240px",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent:
+              props.status === "inventory" ? "right" : "space-between",
+            alignItems: "center",
+          }}
+        >
+          {props.status === "rented" && (
+            <Typography style={{ fontSize: "12px", overflow: "hidden" }}>
+              {props.car.currCustomerName}: {props.car.daysRemaining} days
+            </Typography>
+          )}
+          {props.status === "maintenance" && (
+            <Typography style={{ fontSize: "12px", overflow: "hidden" }}>
+              {props.car.daysRemaining} days
+            </Typography>
+          )}
+          <IconButton
+            sx={{
+              padding: "0px",
+              marginBottom: "5px",
+              color: "grey",
             }}
+            onClick={() => setConfirmDialog(true)}
           >
-            {props.status === "rented" && (
-              <Typography style={{ fontSize: "12px" }}>
-                {props.car.currCustomerName}: {props.car.daysRemaining} days
-              </Typography>
-            )}
-            {props.status === "maintenance" && (
-              <Typography style={{ fontSize: "12px" }}>
-                {props.car.daysRemaining} days
-              </Typography>
-            )}
-            <IconButton
-              sx={{
-                padding: "0px",
-                marginBottom: "5px",
-                color: "grey",
-              }}
-              onClick={() => setConfirmDialog(true)}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </div>
+            <DeleteIcon />
+          </IconButton>
         </div>
         {(props.status === "inventory" || props.status === "maintenance") && (
           <Button
