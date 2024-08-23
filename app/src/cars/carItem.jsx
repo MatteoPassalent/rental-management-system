@@ -29,17 +29,15 @@ const CarItem = (props) => {
   };
 
   const returnCar = async () => {
-    if (props.status === "rented") {
-      await fetch(`${apiUrl}/return-car`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: props.car.id,
-        }),
-      });
-    }
+    await fetch(`${apiUrl}/return-car`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: props.car.id,
+      }),
+    });
     updateStatus("inventory");
   };
 

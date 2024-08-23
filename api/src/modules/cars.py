@@ -7,6 +7,8 @@ cars = Blueprint("cars", __name__, url_prefix="/api")
 @cars.route("/add-car", methods=["POST"])
 def add_car():
     car_data = request.json
+    if not validate_car(car_data):
+        return jsonify({"message": "missing required fields"}), 400
     car = Car(
         **car_data,
         status="inventory",
@@ -61,3 +63,10 @@ def create_list(results):
         }
         car_list.append(car_data)
     return car_list
+
+def validate_car(car_data):
+    required_fields = ["make", "model", "year", "color", "licensePlate"]
+    for field in required_fields:
+        if field not in car_data:
+            return False
+    return True

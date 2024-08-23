@@ -41,12 +41,11 @@ def car_maintenance():
 def return_car():
     car_id = request.json.get("id")
     car = Car.query.get(car_id)
-    if car.currCustomerId is None:
-        return jsonify({"message": "car is not rented"}), 400
-    customer = Customer.query.get(car.currCustomerId)
-    customer.cars.remove(car)
+    if car.currCustomerId:   
+        customer = Customer.query.get(car.currCustomerId)
+        customer.cars.remove(car)
     car.currCustomerId = None
-    car.curreCustomerName = ""
+    car.currCustomerName = ""
     car.daysRemaining = None
     db.session.commit()
     return jsonify({"message": "car returned"}), 200

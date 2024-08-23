@@ -7,6 +7,8 @@ customers = Blueprint("customers", __name__, url_prefix="/api")
 @customers.route("/add-new-customer", methods=["POST"])
 def add_new_customer():
     name = request.json.get("name")
+    if not name:
+        return jsonify({"message": "Name is required"}), 400
     customer = Customer(name=name)
     db.session.add(customer)
     db.session.commit()
