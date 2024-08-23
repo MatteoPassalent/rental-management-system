@@ -5,7 +5,7 @@ from .models import Car, Customer
 scheduler = APScheduler()
 
 @scheduler.task('cron', id='update_days_remaining', day='*')
-def job2():
+def update_days_remaining():
     with scheduler.app.app_context():
         cars = Car.query.all()
         for car in cars:
