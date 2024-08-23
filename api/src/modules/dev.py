@@ -111,7 +111,7 @@ def seed_db():
             status="rented",
             currCustomerName=jane_smith.name,
             currCustomerId=jane_smith.id,
-            daysRemaining=3,
+            daysRemaining=4,
         ),
         Car(
             make="Audi",
