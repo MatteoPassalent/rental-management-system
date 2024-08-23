@@ -9,6 +9,8 @@ import {
 } from "@mui/material";
 import PropTypes from "prop-types";
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const MaintenanceDialog = (props) => {
   const [days, setDays] = useState("");
 
@@ -24,6 +26,16 @@ const MaintenanceDialog = (props) => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
+    await fetch(`${apiUrl}/car-maintenance`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        carId: props.car.id,
+        days: days,
+      }),
+    });
     props.updateStatus("maintenance");
     handleClose();
   };
@@ -55,6 +67,7 @@ const MaintenanceDialog = (props) => {
 
 MaintenanceDialog.propTypes = {
   open: PropTypes.bool,
+  car: PropTypes.object,
   toggleOpen: PropTypes.func,
   updateStatus: PropTypes.func,
 };

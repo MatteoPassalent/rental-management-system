@@ -7,10 +7,13 @@ cars = Blueprint("cars", __name__, url_prefix="/api")
 @cars.route("/add-car", methods=["POST"])
 def add_car():
     car_data = request.json
+    if not validate_car(car_data):
+        return jsonify({"message": "missing required fields"}), 400
     car = Car(
         **car_data,
         status="inventory",
-        rentedTo=None,
+        currCustomerName="",
+        currCustomerId=None,
         daysRemaining=None,
     )
     db.session.add(car)
@@ -30,11 +33,17 @@ def get_cars():
     inventory = Car.query.filter_by(status="inventory").all()
     maintenance = Car.query.filter_by(status="maintenance").all()
     rented = Car.query.filter_by(status="rented").all()
+
+    inventory_list = create_list(inventory)
+    maintenance_list = create_list(maintenance)
+    rented_list = create_list(rented)
+
     car_lists = {
-        "inventory": create_list(inventory),
-        "maintenance": create_list(maintenance),
-        "rented": create_list(rented),
+        "inventory": inventory_list,
+        "maintenance": maintenance_list,
+        "rented": rented_list,
     }
+
     return jsonify(car_lists), 200
 
 def create_list(results):
@@ -49,7 +58,15 @@ def create_list(results):
             "licensePlate": car.licensePlate,
             "status": car.status,
             "daysRemaining": car.daysRemaining,
-            "rentedTo": car.rentedTo,
+            "currCustomerName": car.currCustomerName,
+            "currCustomerId": car.currCustomerId,
         }
         car_list.append(car_data)
     return car_list
+
+def validate_car(car_data):
+    required_fields = ["make", "model", "year", "color", "licensePlate"]
+    for field in required_fields:
+        if field not in car_data:
+            return False
+    return True
