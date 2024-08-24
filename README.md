@@ -28,7 +28,7 @@ The table models and embedded SQL database enable the following features:
 ## Solution Features
 
 Component diagram of the three major components and their sub-components:  
-![image1](https://github.com/MatteoPassalent/rental-management-system/blob/main/report_images/diagram_1.png)
+![image1](https://github.com/MatteoPassalent/rental-management-system/blob/dev/report_images/diagram_1.png)
 
 **Frontend React App:**
 
