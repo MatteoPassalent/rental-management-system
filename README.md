@@ -1,4 +1,4 @@
-Demo: [rental-management-system](https://matteopassalent.com)
+Raspberry Pi Deployment: [rental-management-system](https://matteopassalent.com)
 ## System Architecture
 
 The three top-level components of the software system include the Frontend React Application, the Flask API, and the Database Models and Schema. Described below is a list of the features each top-level component enables.
