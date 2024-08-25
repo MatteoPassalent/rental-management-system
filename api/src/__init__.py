@@ -13,11 +13,6 @@ def create_app():
     app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
     db.init_app(app)
 
-    from src.cron import scheduler
-    scheduler.api_enabled = True
-    scheduler.init_app(app)
-    scheduler.start()
-
     from src.modules.cars import cars
     from src.modules.customers import customers
     from src.modules.status_catergory import status_catergory
@@ -31,7 +26,13 @@ def create_app():
         app.register_blueprint(dev)
 
     with app.app_context():
-        if not path.exists("/api/instance/database.db"):
+        db_path = os.path.join(app.instance_path, 'database.db')
+        if not os.path.exists(db_path):
             db.create_all()
+
+    from src.cron import scheduler
+    scheduler.api_enabled = True
+    scheduler.init_app(app)
+    scheduler.start()
 
     return app
