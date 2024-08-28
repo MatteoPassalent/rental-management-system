@@ -43,6 +43,7 @@ jobs:
           cd api
           pytest
 
+      # Raspberry Pi lacks processing power to build app quickly, must be scp'd instead
       - name: Build React app
         run: |
           cd app
