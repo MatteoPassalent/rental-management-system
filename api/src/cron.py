@@ -28,7 +28,7 @@ def update_days_remaining():
         db.session.commit()
 
 # Reset db for demo deployment
-@scheduler.task('cron', id='seed_db', day='*/3', second='5')
+@scheduler.task('cron', id='seed_db', day='*/3', hour='0', minute='0', second='5')
 def seed_db():
     with scheduler.app.app_context():
         db.drop_all()
