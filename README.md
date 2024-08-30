@@ -97,5 +97,11 @@ This sequence diagram illustrates the interaction between a dealership employee 
 5. **Add New Customer (Synchronous):**  
    * The employee inputs details of a new customer. The system adds the customer to permanent storage.   
 6. **Display Updated Inventory (Async):**  
-   * After each add, remove, or modify operation performed on the dealership’s inventory the new information will be displayed for the employee to view in the UI. 
+   * After each add, remove, or modify operation performed on the dealership’s inventory the new information will be displayed for the employee to view in the UI.
+
+## Deployment
+The application was deployed on a Raspberry Pi web server. Gunicorn was used to manage the background Python processes, and Nginx was configured as a reverse proxy to serve the web app securely over HTTP/HTTPS, directing external traffic to the Raspberry Pi while handling SSL termination. An SSH agent was configured to ensure secure remote access and enable CI/CD workflows that automatically build, test, and deploy code changes to the Raspberry Pi’s production environment. A custom dynamic DNS service was developed to handle changes in the network's public IP address. This service automatically detects IP changes and updates the domain accordingly, simulating the functionality of a static IP, which ISPs typically preserve for enterprise networks.
+
+<img src="https://github.com/MatteoPassalent/rental-management-system/blob/dev/report_images/image_1.jpg" alt="image1" width="600"/>
+
 
