@@ -1,0 +1,64 @@
+name: Deploy to Raspberry Pi
+
+on:
+  push:
+    branches:
+      - prod
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: |
+          cd app
+          npm install
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      - name: Install Python dependencies
+        run: |
+          cd api
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Node.js tests
+        run: |
+          cd app
+          npm test
+
+      - name: Run Python tests
+        run: |
+          cd api
+          pytest
+
+      # Raspberry Pi lacks processing power to build app quickly, must be scp'd instead
+      - name: Build React app
+        run: |
+          cd app
+          REACT_APP_API_URL="https://matteopassalent.com/api" npm run build
+
+      - name: Add Raspberry Pi to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H matteopassalent.com >> ~/.ssh/known_hosts
+
+      - name: Add ssh and deploy to Raspberry Pi
+        run: |
+          eval "$(ssh-agent -s)"
+          echo "$SSH_KEY" | ssh-add -
+          scp -r ./app/build/* matteopassalent@matteopassalent.com:~/rental-management-system/app/build/
+          ssh matteopassalent@matteopassalent.com 'cd ~/rental-management-system/deployment/ && ./deploy.sh'
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
