@@ -11,7 +11,7 @@ const HeaderBar = () => {
         fontSize: "1.3rem",
       }}
     >
-      Rental Car Management System TEST
+      Rental Car Management System
     </AppBar>
   );
 };
