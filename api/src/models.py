@@ -16,3 +16,10 @@ class Customer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     cars = db.relationship("Car")
+
+class House(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    price = db.Column(db.Integer())
+    bedrooms = db.Column(db.Integer())
+    streetName = db.Column(db.String(50))
+    owner = db.Column(db.String(50))
