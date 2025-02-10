@@ -15,8 +15,10 @@ def create_app():
     from src.modules.cars import cars
     from src.modules.customers import customers
     from src.modules.status_catergory import status_catergory
+    from src.modules.house import house
 
     app.register_blueprint(cars)
+    app.register_blueprint(house)
     app.register_blueprint(customers)
     app.register_blueprint(status_catergory)
 
