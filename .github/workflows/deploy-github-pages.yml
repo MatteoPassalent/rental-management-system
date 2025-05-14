@@ -1,33 +1,38 @@
-# Workflow name
-name: Build and Publish Storybook to GitHub Pages
+name: Deploy test page
 
 on:
-  # Event for the workflow to run on
   push:
-    branches:
-      - "prod"
+    branches: [main]
 
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# List of jobs
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    # Job steps
+
     steps:
-      # Manual Checkout
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload static site
+        uses: actions/upload-pages-artifact@v2
         with:
-          fetch-depth: 0
-      # Set up Node
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-      #👇 Add Storybook build and deploy to GitHub Pages as a step in the workflow
-      - name: Build and Deploy Storybook
-        working-directory: ts/apps/web
-          - '**'
-          - /
+          path: . # This includes index.html in the root
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
