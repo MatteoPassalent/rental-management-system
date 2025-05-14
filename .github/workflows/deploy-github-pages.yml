@@ -23,7 +23,7 @@ jobs:
       - name: Upload test file
         uses: actions/upload-pages-artifact@v2
         with:
-          path: /deploytest/index.html
+          path: deploytest
 
       - name: Deploy to GitHub Pages
         id: deployment
