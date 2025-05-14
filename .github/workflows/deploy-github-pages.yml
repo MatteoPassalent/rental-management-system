@@ -2,7 +2,7 @@ name: Deploy test page
 
 on:
   push:
-    branches: [main]
+    branches: [prod]
 
 permissions:
   contents: read
