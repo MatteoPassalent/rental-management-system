@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: "20"
       #👇 Add Storybook build and deploy to GitHub Pages as a step in the workflow
-      name: Build and Deploy Storybook
+      - name: Build and Deploy Storybook
         working-directory: ts/apps/web
         uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
         with:
