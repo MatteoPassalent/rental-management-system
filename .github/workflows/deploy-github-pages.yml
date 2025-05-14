@@ -1,8 +1,10 @@
-name: Deploy test page
+name: Deploy Test File
 
 on:
+  workflow_dispatch:
   push:
-    branches: [prod]
+    branches:
+      - "prod"
 
 permissions:
   contents: read
@@ -10,29 +12,19 @@ permissions:
   id-token: write
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
-      - name: Upload static site
+      - name: Upload test file
         uses: actions/upload-pages-artifact@v2
         with:
-          path: . # This includes index.html in the root
+          path: /deploytest/index.html
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
