@@ -25,6 +25,13 @@ jobs:
         with:
           path: deploytest
 
+      - name: Dummy step to fix upload-artifact bug
+        uses: actions/upload-artifact@v3
+        with:
+          name: dummy
+          path: /dev/null
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+s
